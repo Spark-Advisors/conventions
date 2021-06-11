@@ -40,7 +40,6 @@ General Python:
 
 - [Wrap with parens not backslashes](#wrapping)
 - [Make function signatures explicit](#make-function-signatures-explicit)
-- [Import modules, not objects](#import-modules-not-objects)
 - [Convenience imports](#convenience-imports)
 - [Application logic in interface layer](#application-logic-in-interface-layer)
 - [Don't do nothing silently](#dont-do-nothing-silently)
@@ -1040,63 +1039,6 @@ At a minimum, specify the parameters explicitly. However, many parametered funct
 also consider fixing the underlying problem through refactoring. One option is the
 [Introduce Parameter Object](https://sourcemaking.com/refactoring/introduce-parameter-object) technique, which
 introduces a dedicated class to pass the data.
-
-### Import modules, not objects
-
-Usually, you should import modules rather than their objects. Instead of:
-
-```python
-from django.http import (
-    HttpResponse, HttpResponseRedirect, HttpResponseBadRequest)
-from django.shortcuts import render, get_object_or_404
-```
-
-prefer:
-
-```python
-from django import http, shortcuts
-```
-
-This keeps the module namespace cleaner and less likely to have accidental
-collisions. It also usually makes the module more concise and readable.
-
-Further, it fosters writing simpler isolated unit tests in that import modules
-works well with `mock.patch.object` to fake/stub/mock _direct_ collaborators of the
-system-under-test. Using the more general `mock.patch` often leads to accidental integration tests
-as an indirect collaborator (several calls away) is patched.
-
-Eg:
-
-```python
-import mock
-from somepackage import somemodule
-
-@mock.patch.object(somemodule, 'collaborator')
-def test_a_single_unit(collaborator):
-    somemodule.somefunction(1)
-    collaborator.assert_called_with(value=1)
-```
-
-Remember, in the long term, slow integration tests will rot your test suite.
-Fast isolated unit tests keep things healthy.
-
-#### When to import objects directly
-
-Avoiding object imports isn't a hard and fast rule. Sometimes it can significantly
-impair readability. This is particularly the case with commonly used objects
-in the standard library. Some examples where you should import the object instead:
-
-```python
-from decimal import Decimal
-from typing import Optional, Tuple, Dict
-from collections import defaultdict
-```
-
-### Convenience imports
-
-A useful pattern is to import the "public" objects from a package into its
-`__init__.py` module to make life easier for calling code. This does need to be
-done with care though - here's a few guidelines:
 
 #### Establish a canonical import path by prefixing private module names with underscores
 
