@@ -1,9 +1,8 @@
-# Octopus Energy conventions
+# Spark Advisors conventions
 
-This doc details house conventions for code written at Octopus Energy.
+This doc details house conventions for code written at Spark Advisors.
 
-> "Everyone is happier when the code we interact with is clean and consistent. Even if it doesn't match your own style perfectly, consistency is the most important thing."
-> *Chris Coyier*
+This repo is forked from [Octopus Energy](https://github.com/octoenergy/conventions) and owes them a debt of gratitude.
 
 It is intended to be a reference that can be linked to in code-review comments,
 similar to the [Go code review comments](https://github.com/golang/go/wiki/CodeReviewComments) guide.
