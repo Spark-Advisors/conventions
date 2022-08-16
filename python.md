@@ -956,8 +956,12 @@ domain concept is a date instead of a datetime, but in general, prefer to model
 with datetimes.
 
 
-## Python 
+### Convenience imports
+A useful pattern is to import the "public" objects from a package into its
+`__init__.py` module to make life easier for calling code. This does need to be
+done with care though - here's a few guidelines:
 
+## Python 
 
 ### <a name="wrapping">Wrap with parens not backslashes</a>
 
