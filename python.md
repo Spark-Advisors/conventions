@@ -961,7 +961,9 @@ A useful pattern is to import the "public" objects from a package into its
 `__init__.py` module to make life easier for calling code. This does need to be
 done with care though - here's a few guidelines:
 
-## Python 
+## Python
+
+
 
 ### <a name="wrapping">Wrap with parens not backslashes</a>
 
@@ -1003,18 +1005,18 @@ This includes functions that wrap lower level functionality, such as model creat
 ```python
 class MyModel(models.Model):
     ...
-    
+
     @classmethod
     def new(cls, **kwargs):  # Don't do this.
         return cls.objects.create(**kwargs)
-``` 
+```
 
 Instead, do this:
 
 ```python
 class MyModel(models.Model):
     ...
-    
+
     @classmethod
     def new(cls, foo: int, bar: str):
         return cls.objects.create(foo=foo, bar=bar)
@@ -1031,7 +1033,7 @@ for example:
 ```python
 def main():
     do_something(one=1, two=2, three=3, four=4, five=5, six=6, seven=7, eight=8, nine=9, ten=10)
-    
+
 def do_something(**kwargs):  # Don't do this.
    _validate(**kwargs)
    _execute(**kwargs)
@@ -1061,7 +1063,7 @@ mypackage/
 
 It's okay for private and public modules to coexist in the same package, as long as the public modules aren't used in
 convenience imports. For example, in the following structure we might expect calling code to access `mypackage.blue` and
-`mypackage.bar.green`, but not `mypackage._foo.blue` or `mypackage.green`. 
+`mypackage.bar.green`, but not `mypackage._foo.blue` or `mypackage.green`.
 
 ```txt
 mypackage/
@@ -1073,7 +1075,7 @@ mypackage/
 #### Don't use wildcard imports
 
 Don't use wildcard imports (ie `from somewhere import *`), even if each imported
-module specifies an `__all__` variable. 
+module specifies an `__all__` variable.
 
 Instead of:
 ```py
@@ -1088,7 +1090,7 @@ from ._problems import ICantGoForThat, NoCanDo
 from ._features import man_eater, rich_girl, shes_gone
 ```
 
-Why? 
+Why?
 
 - Wildcard imports can make it harder for maintainers to find where functionality lives.
 - Wildcard imports can confuse static analysis tools like mypy.
